@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\FormController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PartnerRegistrationController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,16 +16,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::controller(PartnerRegistrationController::class)->name('registration.')->group(function () {
+    Route::get('/registration', 'index')->name('index');
+    Route::post('/store', 'store')->name('store');
 });
 
-#Auth::routes();
+Route::prefix('admin')->name('admin.')->group(function () {
 
-#Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/home', [FormController::class, 'index'])->name('home');
-Route::get('/form/create', [FormController::class, 'create']);
-Route::post('/form/store', [FormController::class, 'store']);
-Route::get('/form/{id}/edit', [FormController::class, 'edit']);
-Route::put('/form/{id}', [FormController::class, 'update']);
-Route::delete('/form/{id}', [FormController::class, 'destroy']);
+    Route::controller(AdminDashboardController::class)->middleware(['auth', 'admin'])->name('dashboard.')->group(function () {
+        Route::get('/dashboard', 'index')->name('index');
+        Route::get('/view/{uuid}', 'view')->name('view');
+        Route::post('/view/update-status', 'updateStatus')->name('updateStatus');
+        Route::post('/view/delete', 'delete')->name('delete');
+    });
+
+    Route::controller(AdminAuthController::class)->name('auth.')->group(function () {
+        Route::get('/login', 'index')->middleware('guest')->name('login');
+        Route::post('/login/store', 'store')->middleware('guest')->name('store');
+        Route::post('/logout', 'logout')->middleware('auth')->name('logout');
+    });
+});
+
+

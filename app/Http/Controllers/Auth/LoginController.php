@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -36,4 +38,26 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+     * Handle an authenticated user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return \Illuminate\Http\Response
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        } elseif ($user->role === 'customer') {
+            return redirect()->route('customer.dashboard');
+        } elseif ($user->role === 'mitra') {
+            return redirect()->route('mitra.dashboard');
+        }
+
+        // Default redirection if the user's role doesn't match any of the above conditions
+        return redirect()->intended($this->redirectPath());
+    }
+
 }

@@ -16,7 +16,7 @@ class AuthenticateAdmin
     public function handle(Request $request, Closure $next): Response
     {
         // Check if user is authenticated and has 'Admin' role
-        if ($request->user() && $request->user()->role != 'Admin') {
+        if ($request->user() && $request->user()->role != 'admin') {
             // Redirect to home.index route if not an admin
             return redirect()->route('registration.index');
         }

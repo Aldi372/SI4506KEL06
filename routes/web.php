@@ -20,6 +20,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+<<<<<<< Updated upstream
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -49,3 +50,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 Route::view('mitra', 'mitra.dashboard');
 
+=======
+Route::get('/menus',[\App\Http\Controllers\MenuController::class,'index']);
+Route::post('/menus',[\App\Http\Controllers\MenuController::class,'store']);
+Route::get('/menus/create',[\App\Http\Controllers\MenuController::class,'create']);
+Route::get('/menus/{id}/edit',[\App\Http\Controllers\MenuController::class,'edit']);
+Route::put('/menus/{id}',[\App\Http\Controllers\MenuController::class,'update']);
+Route::delete('/menus/{id}',[\App\Http\Controllers\MenuController::class,'destroy']);
+>>>>>>> Stashed changes

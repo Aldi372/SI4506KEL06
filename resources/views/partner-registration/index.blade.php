@@ -42,18 +42,18 @@
                                 <div class="form-group">
                                     <label for="name" class="font-weight-bold">Nama Pemilik</label>
                                     <input type="text" class="form-control form-control-user" id="name" name="name"
-                                        value="{{ auth()->user()->nama }}" readonly>
+                                        value="{{ auth()->user()->nama }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="no_hp" class="font-weight-bold">No. Whatsapp Pemilik
                                         Usaha</label>
                                     <input type="text" class="form-control form-control-user" id="no_hp" name="no_hp"
-                                        value="{{ auth()->user()->no_hp }}" readonly>
+                                        value="{{ auth()->user()->no_hp }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="email" class="font-weight-bold">Alamat Email</label>
                                     <input type="email" class="form-control form-control-user" id="email" name="email"
-                                        value="{{ auth()->user()->email }}" readonly>
+                                        value="{{ auth()->user()->email }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="nama-bisnis" class="font-weight-bold">Nama Bisnis *</label>

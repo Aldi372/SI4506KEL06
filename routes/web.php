@@ -48,7 +48,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/status/{id}', 'updateStatus')->name('updateStatus');
 
     });
-
+                                      
     Route::controller(AdminAuthController::class)->name('auth.')->group(function () {
         Route::get('/login', 'index')->middleware('guest')->name('login');
         Route::post('/login/store', 'store')->middleware('guest')->name('store');

@@ -54,7 +54,7 @@ class ProfileController extends Controller
         // Logout user setelah profil dihapus
         Auth::logout();
 
-        return redirect()->route('profile.index')->with('success', 'Your profile has been deleted!');
+        return redirect()->route('profile.index')->with('success', 'Your profile has been remove!');
     }
     public function show()
     {

@@ -27,6 +27,7 @@ Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 Route::get('/edit_profile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
 Route::post('/edit_profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.edit');
+Route::post('/edit_profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('pemesanan');
 
 Route::controller(PartnerRegistrationController::class)->name('registration.')->group(function () {
     Route::get('/registration', 'index')->name('index');

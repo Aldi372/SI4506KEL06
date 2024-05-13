@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PartnerRegistrationController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\AdminDaftarTokoController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -28,6 +29,7 @@ Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 Route::get('/edit_profile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
 Route::post('/edit_profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.edit');
+
 
 Route::controller(PartnerRegistrationController::class)->name('registration.')->group(function () {
     Route::get('/registration', 'index')->name('index');
@@ -42,13 +44,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/view/delete', 'delete')->name('delete');
     });
 
-    Route::controller(AdminDaftarTokoController::class)->middleware(['auth', 'admin'])->name('daftartoko.')->group(function () {
-        Route::get('/toko', 'index')->name('index');
-        Route::get('/action/{id}', 'action')->name('action');
-        Route::post('/status/{id}', 'updateStatus')->name('updateStatus');
 
-    });
-                                      
     Route::controller(AdminAuthController::class)->name('auth.')->group(function () {
         Route::get('/login', 'index')->middleware('guest')->name('login');
         Route::post('/login/store', 'store')->middleware('guest')->name('store');
@@ -56,4 +52,4 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 });
 
-       
+

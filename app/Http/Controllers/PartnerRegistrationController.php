@@ -82,32 +82,4 @@ class PartnerRegistrationController extends Controller
         return redirect(route('registration.index'))->with('success', 'success');
     }
 
-    // public function verify(Request $request, $id) {
-    // try {
-    //     // Cari data di tabel PartnerRegistrationRequest berdasarkan ID
-    //     $data = PartnerRegistrationRequest::findOrFail($id);
-
-    //     // Ambil status dari request
-    //     $status = $request->status;
-
-    //     // Ubah status sesuai dengan parameter yang diberikan
-    //     $data->status = $status;
-    //     $data->save();
-
-    //     // Jika status 'accepted', pindahkan data ke tabel DataMitra
-    //     // if ($status == 'accepted') {
-    //     //     DataMitra::create([
-    //     //         'email' => $data->email,
-    //     //         'nama_bisnis' => $data->nama_bisnis,
-    //     //         'kategori_menu' => $data->kategori_menu,
-    //     //         'kategori_usaha' => $data->kategori_usaha,
-    //     //         // ... tambahkan field lainnya
-    //     //     ]);
-    //     // }
-
-    //     return redirect()->back()->with('success', 'Verifikasi berhasil');
-    // } catch (\Exception $e) {
-    //     return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
-    // }
-    // }
 }

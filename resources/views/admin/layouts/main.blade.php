@@ -52,12 +52,6 @@
                     <span>Dashboard</span></a>
             </li>
 
-            <!-- Nav Item - Daftar Toko -->
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ route('admin.daftartoko.index') }}">
-                    <i class="fas fa-fw fa-user-alt"></i>
-                    <span>Daftar Toko</span></a>
-            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">

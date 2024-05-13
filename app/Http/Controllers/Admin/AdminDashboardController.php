@@ -30,14 +30,7 @@ class AdminDashboardController extends Controller
 
         $data = PartnerRegistrationRequest::where('uuid', $request->uuid)->firstOrFail();
         if ($request->action == 'accept') {
-            $data->status = 'accepted';
-            $data->update();
-            return redirect(route('admin.dashboard.index'))->with('success', 'Data berhasil di update');
-        } else if ($request->action == 'reject') {
-            $data->status = 'rejected';
-            $data->update();
-            return redirect(route('admin.dashboard.index'))->with('success', 'Data berhasil di update');
-        } elseif ($request->action == 'delete') {
+
             if (Storage::exists("public/$data->foto_ktp")) {
                 Storage::delete("public/$data->foto_ktp");
             }

@@ -81,4 +81,5 @@ class PartnerRegistrationController extends Controller
 
         return redirect(route('registration.index'))->with('success', 'success');
     }
+
 }

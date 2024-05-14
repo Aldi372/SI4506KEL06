@@ -81,26 +81,29 @@
             <main class="content px-3 py-2">
                 <div class="container mt-5">
                     <div class="container mt-5 card card-body">
-                        <h1>Edit User</h1>
-
-                        <form action="{{ route('data_customer.update', $user->id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name:</label>
-                                <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}"
-                                    required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email:</label>
-                                <input type="email" class="form-control" id="email" name="email"
-                                    value="{{ $user->email }}" required>
-                            </div>
-
-
-                            <button type="submit" class="btn btn-primary">Update User</button>
-                        </form>
+                        <h1>Lihat Data Verifikasi Mitra</h1>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Nama Toko</th>
+                                <td>{{ $mitras->nama_toko }}</td>
+                            </tr>
+                            <tr>
+                                <th>Kontak Yang Dapat Dihubungi</th>
+                                <td>{{ $mitras->no_hp_toko }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nama Pemilik</th>
+                                <td>{{ $mitras->name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Kategori Usaha</th>
+                                <td>{{ $mitras->kategori }}</td>
+                            </tr>
+                            <tr>
+                                <th>Alamat Toko</th>
+                                <td>{{ $mitras->alamat_toko }}</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </main>
@@ -108,6 +111,7 @@
                 <i class="fa-regular fa-moon"></i>
                 <i class="fa-regular fa-sun"></i>
             </a>
+
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="row text-muted">

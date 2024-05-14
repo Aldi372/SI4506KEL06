@@ -40,4 +40,10 @@ class MitraController extends Controller
             $mitras = Mitra::all();
             return view('admin.list_mitra.verifikasi', compact('mitras'));
         }
+
+    public function show($id)
+        {
+            $mitras = Mitra::findOrFail($id);
+            return view('admin.list_mitra.show', compact('mitras'));
+        }
 }

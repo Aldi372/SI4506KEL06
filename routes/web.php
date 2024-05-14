@@ -120,3 +120,7 @@ Route::get('/dashboard', function (){
     return view('admin.dashboard');
 });
 Route::get('/verifikasi_mitra', [MitraController::class, 'index'])->name('verifikasi_mitra');
+Route::get('/lihat_data_mitra', function (){
+    return view('admin.list_mitra.show');
+});
+Route::get('/mitra/{id}', [MitraController::class, 'show'])->name('admin.list_mitra.show');

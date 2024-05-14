@@ -93,7 +93,8 @@
                                     <td>{{ $mitra->alamat_toko }}</td>
                                     <td>{{ $mitra->status }}</td>
                                     <td>
-                                        <a href="#" class="btn btn-warning btn-sm">Cek Data</a>
+                                        <a href="{{ route('mitra.show', $mitra->id) }}"
+                                            class="btn btn-warning btn-sm">Cek Data</a>
                                         <form action="#" style="display:inline">
                                             @csrf
                                             @method('DELETE')

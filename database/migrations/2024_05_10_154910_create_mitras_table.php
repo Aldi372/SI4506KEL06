@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('kategori');
             $table->string('alamat_toko');
+            $table->string('foto_ktp', 300)->nullable();
             $table->enum('status', ['PENDING', 'ACCEPT', 'REJECT'])->default('pending');
             $table->timestamps();
         });

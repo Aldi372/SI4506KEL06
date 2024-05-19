@@ -24,14 +24,15 @@
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/edit_profile.css') }}">
 
-    <title>Coffside Web</title>
+    <title>FoodRescue Landing Page</title>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ecede8;">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{url('/')}}">
                 <img src="{{ asset('images/logo-1.png') }}" alt="Coffside Logo" width="80" height="40">
 
             </a>
@@ -52,10 +53,10 @@
                         <a class="nav-link" href="{{ url('menu_customer') }}">Menu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Chat</a>
+                        <a class="nav-link" href="{{ url('chat')}}">Chat</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Artikel</a>
+                        <a class="nav-link" href="{{ url('artikel')}}">Artikel</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('cart.index') }}">
@@ -72,7 +73,7 @@
                             {{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="#">Profil</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/profil_customer')}}">Profil</a></li>
                             <li><a class="dropdown-item" href="{{ url('/customer/orders')}}">List Pemesanan</a></li>
                             <li><a class="dropdown-item" href="{{ url('registrasi_mitra') }}">Registrasi Mitra</a></li>
                             <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
@@ -89,5 +90,6 @@
     </main>
     </div>
 </body>
+@include('layouts.footer')
 
 </html>

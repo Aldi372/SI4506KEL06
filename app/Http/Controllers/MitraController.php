@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Mitra;
+use App\Models\User;
 use Illuminate\Support\Facades\Session;
 
 
@@ -43,7 +44,25 @@ class MitraController extends Controller
 
     public function show($id)
         {
-            $mitras = Mitra::findOrFail($id);
+            $mitras = Mitra::where('status', 'PENDING')->findOrFail($id);
             return view('admin.list_mitra.show', compact('mitras'));
         }
+    public function accept($id)
+        {
+            $mitra = Mitra::findOrFail($id);
+    
+
+            $mitra->status = 'ACCEPT';
+            $mitra->save();
+    
+
+            $user = User::where('name', $mitra->name)->first();
+            if ($user) {
+                $user->role = 'mitra';  
+                $user->save();
+            }
+    
+            return redirect()->back()->with('success', 'Mitra berhasil diterima dan peran pengguna diperbarui.');
+        }
+        
 }

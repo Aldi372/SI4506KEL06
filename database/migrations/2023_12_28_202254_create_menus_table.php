@@ -13,6 +13,7 @@ class CreateMenusTable extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->string('nama_menu');
+            $table->string('nama_toko');
             $table->string('kategori_menu');
             $table->string('gambar_menu');
             $table->decimal('harga_menu', 8, 2);

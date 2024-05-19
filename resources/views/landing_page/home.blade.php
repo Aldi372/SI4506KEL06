@@ -107,11 +107,6 @@
                 </div>
             </div>
         </div>
-        <h2 class="promo-heading mt-4">What They Say About Us</h2>
-        <div class="container">
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-            </div>
-        </div>
     </div>
 </div>
 
@@ -119,24 +114,5 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
-<footer style="background-color: #2aa14b; color: #ffffff; padding: 20px;">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <h4>FoodRescue</h4>
-            </div>
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-4">
-                    </div>
-                    <div class="col-md-4">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-
 
 @endsection

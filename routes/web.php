@@ -138,4 +138,10 @@ Route::get('/chat', function(){
     return view('customer.chat');
 });
 
+use App\Http\Controllers\ReviewController;
+
+Route::get('/reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
+
 Route::get('/profil_customer/{id}', [ProfileCustomerController::class, 'show'])->name('customer.profil');

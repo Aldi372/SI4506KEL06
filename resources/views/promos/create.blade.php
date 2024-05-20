@@ -36,7 +36,7 @@
                     <li class="sidebar-item">
                         <a href="{{url('stocks')}}" class="sidebar-link">
                             <i class="fa-solid fa-archive pe-2"></i>
-                            Stock
+                            Stock 
                         </a>
                     </li>
                     <li class="sidebar-item">

@@ -108,7 +108,7 @@
                             <tbody>
                                 @foreach($menus as $menu)
                                 <tr>
-                                    <td>{{ $menu->id }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $menu->nama_menu }}</td>
                                     <td>{{ $menu->kategori_menu }}</td>
                                     <td>

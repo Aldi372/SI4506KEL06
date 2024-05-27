@@ -102,11 +102,17 @@
                                 <input type="text" class="form-control" id="nama_menu" name="nama_menu" required>
                             </div><br>
                             <div class="form-group">
+                                <label for="nama_toko">Nama Toko</label>
+                                <input type="text" class="form-control" id="nama_toko" name="nama_toko"
+                                    value="{{ $mitra->nama_toko }}" readonly>
+                            </div><br>
+                            <div class="form-group">
                                 <label for="kategori_menu">Kategori Menu:</label>
                                 <select class="form-control" id="kategori_menu" name="kategori_menu" required>
-                                    <option value="Coffee">Coffee</option>
-                                    <option value="Non-Coffee">Non-Coffee</option>
                                     <option value="Food">Food</option>
+                                    <option value="Drink">Drink</option>
+                                    <option value="Snack">Snack</option>
+                                    <option value="Snack">Dessert</option>
                                 </select>
                             </div><br>
                             <br>

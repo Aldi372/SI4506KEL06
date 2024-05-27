@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Mitra;
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 
 class MitraController extends Controller
@@ -64,5 +65,16 @@ class MitraController extends Controller
     
             return redirect()->back()->with('success', 'Mitra berhasil diterima dan peran pengguna diperbarui.');
         }
-        
+    public function create()
+        {
+            $user = auth()->user();
+            $mitra = Mitra::where('user_id', $user->id)->first();
+            return view('menus.create', compact('mitra'));
+        }
+
+    public function listNamaToko()
+        {
+            $mitras = Mitra::all(['nama_toko']);
+            return view('menus.create', compact('mitras'));
+        }
 }

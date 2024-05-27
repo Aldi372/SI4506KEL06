@@ -6,22 +6,34 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use App\Models\Stock;
+use App\Models\Mitra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
     public function index()
     {
-        $menus = Menu::simplePaginate(5);
+        $user = Auth::user();
+        $mitra = Mitra::where('name', $user->name)->first();
+
+        if ($mitra) {
+            $menus = Menu::where('nama_toko', $mitra->nama_toko)->simplePaginate(5);
+        } else {
+            $menus = collect();
+        }
+
         return view('menus.index', compact('menus'));
 
     }
 
     public function create()
     {
-        return view('menus.create');
+        $user = Auth::user();
+        $mitra = Mitra::where('name', $user->name)->first();
+        return view('menus.create', compact('mitra'));
     }
 
     public function store(Request $request)
@@ -35,6 +47,7 @@ class MenuController extends Controller
 
         $menu = new Menu();
         $menu->nama_menu = $request->input('nama_menu');
+        $menu->nama_toko = $request->input('nama_toko');
         $menu->kategori_menu = $request->input('kategori_menu');
 
 

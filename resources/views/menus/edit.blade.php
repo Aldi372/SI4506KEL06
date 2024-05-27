@@ -100,6 +100,11 @@
                             <input type="text" class="form-control" id="nama_menu" name="nama_menu"
                                 value="{{ $menu->nama_menu }}" required>
                         </div><br>
+                        <div class="form-group"><br>
+                            <label for="nama_toko">Nama Menu:</label><br>
+                            <input type="text" class="form-control" id="nama_toko" name="nama_toko"
+                                value="{{ $menu->nama_toko }}" readonly>
+                        </div><br>
                         <div class="form-group">
                             <label for="kategori_menu">Kategori Menu:</label><br>
                             <select class="form-control" id="kategori_menu" name="kategori_menu" required>

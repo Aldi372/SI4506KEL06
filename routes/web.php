@@ -139,3 +139,7 @@ Route::get('/chat', function(){
 });
 
 Route::get('/profil_customer/{id}', [ProfileCustomerController::class, 'show'])->name('customer.profil');
+Route::get('/menus/create', [MitraController::class, 'listNamaToko'])->name('menus.create');
+Route::middleware(['auth'])->group(function () {
+    Route::resource('menus', MenuController::class);
+});

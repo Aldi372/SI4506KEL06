@@ -1,14 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app-customer')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+@section('content')
 
-<body>
-    <h1>Ini halaman Chat</h1>
-</body>
+<!-- Carousel -->
+<div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <a href="{{ url('banner-1') }}">
+                <img src="{{ asset('images/banner-1.png') }}" class="d-block w-100" alt="Slide 1">
+            </a>
+        </div>
+        <div class="carousel-item">
+            <a href="{{ url('banner-2') }}">
+                <img src="{{ asset('images/banner-2.png') }}" class="d-block w-100" alt="Slide 2">
+            </a>
+        </div>
+        <div class="carousel-item">
+            <a href="{{ url('banner-3') }}">
+                <img src="{{ asset('images/banner-3.png') }}" class="d-block w-100" alt="Slide 3">
+            </a>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
 
-</html>
+<p>Ini Halaman chat</p>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+@endsection

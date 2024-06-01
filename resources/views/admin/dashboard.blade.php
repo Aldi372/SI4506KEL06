@@ -40,13 +40,13 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">
+                        <a href="{{url('daftar-toko')}}" class="sidebar-link">
                             <i class="fa-solid fa-comment-dollar pe-2"></i>
                             Data Akun Toko
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">
+                        <a href="{{ url('promos') }}" class="sidebar-link">
                             <i class="fa-solid fa-comment-dollar pe-2"></i>
                             Promo
                         </a>

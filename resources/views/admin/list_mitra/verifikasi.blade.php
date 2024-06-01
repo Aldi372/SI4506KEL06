@@ -14,7 +14,6 @@
 <body>
     <div class="wrapper">
         <aside id="sidebar" class="js-sidebar">
-            <!-- Content For Sidebar -->
             <div class="h-100">
                 <div class="sidebar-logo">
                     <a href="#">Admin Dashboard</a>
@@ -29,21 +28,27 @@
                     </li>
 
                     <li class="sidebar-item">
-                        <a href="{{ url('list_mitra')}}" class="sidebar-link">
+                        <a href="{{ url('verifikasi_mitra')}}" class="sidebar-link">
                             <i class="fa-solid fa-comment-dollar pe-2"></i>
                             Verifikasi Mitra
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">
+                        <a href="{{url('data_customer')}}" class="sidebar-link">
                             <i class="fa-solid fa-user pe-2"></i>
                             Data Akun Customer
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">
+                        <a href="{{url('daftar-toko')}}" class="sidebar-link">
                             <i class="fa-solid fa-comment-dollar pe-2"></i>
                             Data Akun Toko
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{{ url('promos') }}" class="sidebar-link">
+                            <i class="fa-solid fa-comment-dollar pe-2"></i>
+                            Promo
                         </a>
                     </li>
                 </ul>

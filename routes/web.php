@@ -75,6 +75,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('data_customer', DataCustomerController::class)->parameters([
         'data_customer' => 'user'
     ]);
+    Route::resource('promos', PromoController::class);
+    Route::get('/daftar-toko', [MitraController::class, 'dataNamaToko'])->name('daftar_toko.index');
 
     Route::prefix('admin')->group(function () {
         Route::get('dashboard', function () {
@@ -85,7 +87,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'role:mitra'])->group(function () {
     Route::resource('menus', MenuController::class);
-    Route::resource('promos', PromoController::class);
     Route::resource('stocks', StockController::class);
     Route::resource('orders', OrderController::class);
     Route::prefix('mitra')->group(function () {

@@ -17,12 +17,12 @@
             <!-- Content For Sidebar -->
             <div class="h-100">
                 <div class="sidebar-logo">
-                    <a href="#">Coffside Admin Dashboard</a>
+                    <a href="#">Mitra Dashboard</a>
                 </div>
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">Navigation Sidebar</li>
                     <li class="sidebar-item">
-                        <a href="{{url('admin/dashboard')}}" class="sidebar-link">
+                        <a href="{{url('mitra/dashboard')}}" class="sidebar-link">
                             <i class="fa-solid fa-list pe-2"></i>
                             Dashboard
                         </a>
@@ -37,18 +37,6 @@
                         <a href="{{url('stocks')}}" class="sidebar-link">
                             <i class="fa-solid fa-archive pe-2"></i>
                             Stock
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="{{url('promos')}}" class="sidebar-link">
-                            <i class="fa-solid fa-poll pe-2"></i>
-                            Promo
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="{{url('data_customer')}}" class="sidebar-link">
-                            <i class="fa-solid fa-user pe-2"></i>
-                            Data Akun Customer
                         </a>
                     </li>
                     <li class="sidebar-item">

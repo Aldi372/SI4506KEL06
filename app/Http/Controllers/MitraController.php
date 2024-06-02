@@ -39,7 +39,7 @@ class MitraController extends Controller
 
     public function index()
         {
-            $mitras = Mitra::all();
+            $mitras = Mitra::where('status', 'PENDING')->get();
             return view('admin.list_mitra.verifikasi', compact('mitras'));
         }
 
@@ -63,7 +63,7 @@ class MitraController extends Controller
                 $user->save();
             }
     
-            return redirect()->back()->with('success', 'Mitra berhasil diterima dan peran pengguna diperbarui.');
+            return redirect()->route('admin.dashboard')->with('success', 'Mitra berhasil diterima dan peran pengguna diperbarui.');
         }
     public function create()
         {
@@ -76,5 +76,10 @@ class MitraController extends Controller
         {
             $mitras = Mitra::all(['nama_toko']);
             return view('menus.create', compact('mitras'));
+        }
+    public function dataNamaToko()
+        {
+            $mitras = Mitra::where('status', 'ACCEPT')->get();
+            return view('admin.daftar_toko.index', compact('mitras'));
         }
 }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Coffside Admin Dashboard</title>
+    <title>Mitra Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" />
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('admin_assets2/css/style.css') }}" />
@@ -22,7 +22,7 @@
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">Navigation Sidebar</li>
                     <li class="sidebar-item">
-                        <a href="{{url('admin/dashboard')}}" class="sidebar-link">
+                        <a href="{{url('mitra/dashboard')}}" class="sidebar-link">
                             <i class="fa-solid fa-list pe-2"></i>
                             Dashboard
                         </a>

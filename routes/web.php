@@ -75,6 +75,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('data_customer', DataCustomerController::class)->parameters([
         'data_customer' => 'user'
     ]);
+    Route::resource('promos', PromoController::class);
+    Route::get('/daftar-toko', [MitraController::class, 'dataNamaToko'])->name('daftar_toko.index');
 
     Route::prefix('admin')->group(function () {
         Route::get('dashboard', function () {
@@ -85,7 +87,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'role:mitra'])->group(function () {
     Route::resource('menus', MenuController::class);
-    Route::resource('promos', PromoController::class);
     Route::resource('stocks', StockController::class);
     Route::resource('orders', OrderController::class);
     Route::prefix('mitra')->group(function () {
@@ -138,8 +139,10 @@ Route::get('/chat', function(){
     return view('customer.chat');
 });
 
-Route::get('/profil_customer/{id}', [ProfileCustomerController::class, 'show'])->name('customer.profil');
 Route::get('/menus/create', [MitraController::class, 'listNamaToko'])->name('menus.create');
 Route::middleware(['auth'])->group(function () {
     Route::resource('menus', MenuController::class);
 });
+Route::delete('cart/{rowId}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::patch('/cart/update/{rowId}', [CartController::class, 'update']);
+Route::get('/cart/total', [CartController::class, 'getTotal']);

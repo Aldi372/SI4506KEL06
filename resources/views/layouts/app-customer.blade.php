@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
@@ -73,8 +74,8 @@
                             {{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="{{ url('/profil_customer')}}">Profil</a></li>
-                            <li><a class="dropdown-item" href="{{ url('/customer/orders')}}">List Pemesanan</a></li>
+                            <li><a class="dropdown-item" href="#">Profil</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/customer/orders')}}">Notifikasi</a></li>
                             <li><a class="dropdown-item" href="{{ url('registrasi_mitra') }}">Registrasi Mitra</a></li>
                             <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                         </ul>

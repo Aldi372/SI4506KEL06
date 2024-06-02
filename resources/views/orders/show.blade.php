@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Coffside Admin Dashboard</title>
+    <title>RescueFood Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" />
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('admin_assets2/css/style.css') }}" />
@@ -17,12 +17,12 @@
             <!-- Content For Sidebar -->
             <div class="h-100">
                 <div class="sidebar-logo">
-                    <a href="#">Coffside Admin Dashboard</a>
+                    <a href="#">Mitra Dashboard</a>
                 </div>
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">Navigation Sidebar</li>
                     <li class="sidebar-item">
-                        <a href="{{url('admin/dashboard')}}" class="sidebar-link">
+                        <a href="{{url('mitra/dashboard')}}" class="sidebar-link">
                             <i class="fa-solid fa-list pe-2"></i>
                             Dashboard
                         </a>
@@ -37,18 +37,6 @@
                         <a href="{{url('stocks')}}" class="sidebar-link">
                             <i class="fa-solid fa-archive pe-2"></i>
                             Stock
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="{{url('promos')}}" class="sidebar-link">
-                            <i class="fa-solid fa-poll pe-2"></i>
-                            Promo
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="{{url('data_customer')}}" class="sidebar-link">
-                            <i class="fa-solid fa-user pe-2"></i>
-                            Data Akun Customer
                         </a>
                     </li>
                     <li class="sidebar-item">

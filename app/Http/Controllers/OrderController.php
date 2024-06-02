@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Menu;
+use App\Models\Mitra;
 use App\Models\Promo;
 use App\Models\User;
 use App\Models\Stock;
@@ -14,17 +15,33 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::simplePaginate(10);
-        return view('orders.index', compact('orders'));
-    }
+        $user = Auth::user();
+    
+        $mitra = Mitra::where('name', $user->name)->first();
+    
+        if ($mitra) {
+            $orderMenuIds = Order::whereHas('menu', function ($query) use ($mitra) {
+                $query->where('nama_toko', $mitra->nama_toko);
+            })->pluck('menu_id')->toArray();
+    
+            $namaTokos = Menu::whereIn('id', $orderMenuIds)->pluck('nama_toko')->unique()->toArray();
+    
+            $mitraNames = Mitra::whereIn('nama_toko', $namaTokos)->pluck('name')->toArray();
+    
 
-    public function Customerindex()
-    {
-        $userId = Auth::user()->id;
-        $orders = Order::all(10);
-        return view('orders.index', compact('orders'));
-        
+            $orders = Order::whereIn('menu_id', $orderMenuIds)->paginate(10);
+    
+            $menus = Menu::whereIn('id', $orderMenuIds)->get(); 
+    
+        } else {
+            $orders = collect();
+            $menus = collect();
+        }
+    
+        return view('orders.index', compact('orders', 'menus', 'mitraNames'));
     }
+    
+
 
     public function create()
     {
@@ -48,17 +65,23 @@ class OrderController extends Controller
         $promo = Promo::find($request->input('promo_id'));
         $user = User::find($request->input('user_id'));
 
-
         $stock = Stock::where('menu_id', $menu->id)->first();
 
         if (!$stock || $stock->quantity < $request->input('quantity')) {
-
             return redirect()->back()->with('error', 'Stock habis atau tidak mencukupi untuk pesanan ini');
         }
 
+
+        $subtotal = $menu->harga_menu * $request->input('quantity');
+
+        $discountAmount = ($promo) ? ($subtotal * ($promo->nilai_potongan / 100)) : 0;
+
+        $totalPrice = $subtotal - $discountAmount;
+
         $order = new Order([
             'quantity' => $request->input('quantity'),
-            'total_price' => (($menu->harga_menu * $request->input('quantity')) - ($menu->harga_menu * ($promo ? $promo->nilai_potongan : 0))),
+            'total_price' => $totalPrice,
+            'name' => $user->name,
         ]);
 
         $order->menu()->associate($menu);
@@ -66,14 +89,11 @@ class OrderController extends Controller
         $order->user()->associate($user);
         $order->save();
 
-
         $stock->quantity -= $request->input('quantity');
         $stock->save();
 
         return redirect()->route('orders.index')->with('success', 'Order berhasil ditambahkan');
     }
-
-
 
     public function show(Order $order)
     {
@@ -103,7 +123,7 @@ class OrderController extends Controller
         $promo = $request->input('promo_id') ? Promo::findOrFail($request->input('promo_id')) : null;
         $user = User::findOrFail($request->input('user_id'));
 
-        // Cek status sebelumnya
+
         $previousStatus = $order->status;
 
         $order->menu()->associate($menu);
@@ -130,10 +150,6 @@ class OrderController extends Controller
 
         return redirect()->route('orders.index')->with('success', 'Order berhasil diupdate');
     }
-
-
-
-
 
 
     public function destroy(Order $order)

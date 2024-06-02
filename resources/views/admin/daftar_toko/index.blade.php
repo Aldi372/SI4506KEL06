@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Data Promo</title>
+    <title>Daftar Mitra RescueFood</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" />
     <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('admin_assets2/css/style.css') }}" />
@@ -73,10 +73,43 @@
                 </div>
             </nav>
             <main class="content px-3 py-2">
-                <div class="container-fluid">
-                    @include('promos.form', ['title' => 'Edit Promo', 'route' => route('promos.update', $promo->id),
-                    'method' => 'PUT'])
-
+                <div class="container mt-5 card card-body">
+                    <div class="container mt-4">
+                        <h2>Data Akun Mitra</h2>
+                        <table class="table table-bordered">
+                            <thead>
+                                <th>No</th>
+                                <th>Nama Toko</th>
+                                <th>Kontak Toko</th>
+                                <th>Nama Pemilik</th>
+                                <th>Kategori Usaha</th>
+                                <th>Alamat Toko</th>
+                                <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($mitras as $index => $mitra)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $mitra->nama_toko }}</td>
+                                    <td>{{ $mitra->no_hp_toko }}</td>
+                                    <td>{{ $mitra->name }}</td>
+                                    <td>{{ $mitra->kategori }}</td>
+                                    <td>{{ $mitra->alamat_toko }}</td>
+                                    <td>
+                                        <a href="#" class="btn btn-warning btn-sm">Cek Data</a>
+                                        <form action="#" style="display:inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Apakah Anda yakin ingin menghapus?')">Hapus</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </main>
             <a href="#" class="theme-toggle">
@@ -89,7 +122,7 @@
                         <div class="col-6 text-start">
                             <p class="mb-0">
                                 <a href="#" class="text-muted">
-                                    <strong>Coffside</strong>
+                                    <strong>RescueFood</strong>
                                 </a>
                             </p>
                         </div>

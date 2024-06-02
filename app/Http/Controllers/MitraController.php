@@ -63,7 +63,7 @@ class MitraController extends Controller
                 $user->save();
             }
     
-            return redirect()->back()->with('success', 'Mitra berhasil diterima dan peran pengguna diperbarui.');
+            return redirect()->route('admin.dashboard')->with('success', 'Mitra berhasil diterima dan peran pengguna diperbarui.');
         }
     public function create()
         {

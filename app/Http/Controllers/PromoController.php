@@ -111,19 +111,21 @@ class PromoController extends Controller
     public function storeOrder(Request $request)
     {
         $cartItems = Cart::content();
-        $userId = auth()->user()->id;
-
+        $user = auth()->user(); 
+        $userId = $user->id;
+        $userName = $user->name; 
         $promoId = $request->input('promo_id');
         $promo = Promo::find($promoId);
         $discountPercentage = ($promo) ? $promo->nilai_potongan : 0;
 
         foreach ($cartItems as $item) {
             $discountAmount = ($discountPercentage / 100) * ($item->price * $item->qty);
-            $totalPrice = ($item->price * $item->qty) - ($discountAmount * 100);
+            $totalPrice = ($item->price * $item->qty) - $discountAmount;
 
             Order::create([
                 'menu_id' => $item->id,
                 'quantity' => $item->qty,
+                'name' => $userName,
                 'total_price' => number_format($totalPrice, 2, '.', ''),
                 'promo_id' => $promoId,
                 'user_id' => $userId,

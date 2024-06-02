@@ -139,8 +139,10 @@ Route::get('/chat', function(){
     return view('customer.chat');
 });
 
-Route::get('/profil_customer/{id}', [ProfileCustomerController::class, 'show'])->name('customer.profil');
 Route::get('/menus/create', [MitraController::class, 'listNamaToko'])->name('menus.create');
 Route::middleware(['auth'])->group(function () {
     Route::resource('menus', MenuController::class);
 });
+Route::delete('cart/{rowId}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::patch('/cart/update/{rowId}', [CartController::class, 'update']);
+Route::get('/cart/total', [CartController::class, 'getTotal']);

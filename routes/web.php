@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MitraController;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ProfileCustomerController;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
@@ -135,9 +136,7 @@ Route::get('/profil_customer', function (){
 Route::get('/artikel', function(){
     return view('artikel.dashboard');
 });
-Route::get('/chat', function(){
-    return view('customer.chat');
-});
+
 
 Route::get('/menus/create', [MitraController::class, 'listNamaToko'])->name('menus.create');
 Route::middleware(['auth'])->group(function () {
@@ -146,3 +145,13 @@ Route::middleware(['auth'])->group(function () {
 Route::delete('cart/{rowId}', [CartController::class, 'destroy'])->name('cart.destroy');
 Route::patch('/cart/update/{rowId}', [CartController::class, 'update']);
 Route::get('/cart/total', [CartController::class, 'getTotal']);
+Route::get('chat', function(){
+    $mitraUsers = DB::table('users')
+                    ->join('mitras', 'users.name', '=', 'mitras.name')
+                    ->select('users.id', 'users.name', 'mitras.nama_toko')
+                    ->where('users.role', 'mitra')
+                    ->get();
+
+    return view('customer.chat', ['mitraUsers' => $mitraUsers]);
+})->name('chat.list');
+Route::get('/chat/{user}', \App\Livewire\Chat::class)->name('chat');

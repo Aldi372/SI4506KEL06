@@ -6,7 +6,7 @@
         <div class="row p-2 pt-3 pb-3 d-flex align-items-center">
             <div class="col-md-2">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8">                  
                 <div class="d-flex form-inputs">
                     <input class="form-control" type="text" placeholder="Search any product...">
                     <i class="bx bx-search"></i>

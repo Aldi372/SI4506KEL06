@@ -142,11 +142,3 @@
     color: #265171;
     font-family: "Poppins", serif;
 }
-
-.card {
-    width: 1500px;
-    height: 720px;
-    border-radius: 30px;
-    background: #e0e0e0;
-    box-shadow: 15px 15px 30px #bebebe, -15px -15px 30px #ffffff;
-}

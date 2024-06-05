@@ -1,6 +1,6 @@
-@extends('layout.app-promo')
+@extends('layouts.app-customer')
 
-@section
+@section('content')
 <section class="header-main border-bottom bg-white">
     <div class="container-fluid">
         <div class="row p-2 pt-3 pb-3 d-flex align-items-center">

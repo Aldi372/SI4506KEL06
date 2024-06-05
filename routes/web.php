@@ -11,8 +11,11 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MitraController;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ProfileCustomerController;
 use Symfony\Component\HttpKernel\Profiler\Profile;
+use App\Livewire\Chat\CreateChat;
+use App\Livewire\Chat\Main;
 
 /*  
 |--------------------------------------------------------------------------
@@ -135,9 +138,7 @@ Route::get('/profil_customer', function (){
 Route::get('/artikel', function(){
     return view('artikel.dashboard');
 });
-Route::get('/chat', function(){
-    return view('customer.chat');
-});
+
 
 Route::get('/menus/create', [MitraController::class, 'listNamaToko'])->name('menus.create');
 Route::middleware(['auth'])->group(function () {

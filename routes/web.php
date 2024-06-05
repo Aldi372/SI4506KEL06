@@ -147,16 +147,3 @@ Route::middleware(['auth'])->group(function () {
 Route::delete('cart/{rowId}', [CartController::class, 'destroy'])->name('cart.destroy');
 Route::patch('/cart/update/{rowId}', [CartController::class, 'update']);
 Route::get('/cart/total', [CartController::class, 'getTotal']);
-// Route::get('chat', function(){
-//     $mitraUsers = DB::table('users')
-//                     ->join('mitras', 'users.name', '=', 'mitras.name')
-//                     ->select('users.id', 'users.name', 'mitras.nama_toko')
-//                     ->where('users.role', 'mitra')
-//                     ->get();
-
-//     return view('customer.chat', ['mitraUsers' => $mitraUsers]);
-// })->name('chat.list');
-// Route::get('/chat/{user}', \App\Livewire\Chat::class)->name('chat');
-
-Route::get('/users',CreateChat::class)->name('users');
-Route::get('/chat{key?}',Main::class)->name('chat');

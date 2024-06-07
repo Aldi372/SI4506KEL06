@@ -30,7 +30,7 @@
     <title>FoodRescue Landing Page</title>
 </head>
 
-<body>
+<body class="d-flex flex-column" style="min-height: 100vh;">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ecede8;">
         <div class="container">
             <a class="navbar-brand" href="{{url('/')}}">
@@ -57,7 +57,7 @@
                         <a class="nav-link" href="/chatify">Chat</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('artikel')}}">Artikel</a>
+                        <a class="nav-link" href="{{ route('customer.artikel')}}">Artikel</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('cart.index') }}">
@@ -86,11 +86,11 @@
         </div>
     </nav>
 
-    <main>
+    <main class="flex-grow-1">
         @yield('content')
     </main>
+    @include('layouts.footer')
     </div>
 </body>
-@include('layouts.footer')
 
 </html>

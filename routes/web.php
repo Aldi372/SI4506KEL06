@@ -11,11 +11,11 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MitraController;
+use App\Http\Controllers\ArtikelController;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ProfileCustomerController;
 use Symfony\Component\HttpKernel\Profiler\Profile;
-use App\Livewire\Chat\CreateChat;
-use App\Livewire\Chat\Main;
+
 
 /*  
 |--------------------------------------------------------------------------
@@ -85,6 +85,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('dashboard', function () {
             return view('admin.dashboard');
         })->name('admin.dashboard');
+        Route::get('/artikels', [ArtikelController::class, 'index'])->name('artikels.index');
+        Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index');
+        Route::get('/artikel/create', [ArtikelController::class, 'create'])->name('artikel.create');
+        Route::post('/artikel', [ArtikelController::class, 'store'])->name('artikel.store');
+        Route::get('/artikel/{artikel}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
+        Route::put('/artikel/{artikel}', [ArtikelController::class, 'update'])->name('artikel.update');
+        Route::delete('/artikel/{artikel}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
     });
 });
 
@@ -97,6 +104,7 @@ Route::middleware(['auth', 'role:mitra'])->group(function () {
             return view('mitra.dashboard');
         })->name('mitra.dashboard');
     });
+
 });
 
 
@@ -135,9 +143,10 @@ Route::post('/mitra/{id}/accept', [MitraController::class, 'accept'])->name('mit
 Route::get('/profil_customer', function (){
     return view('customer.profil');
 });
-Route::get('/artikel', function(){
-    return view('artikel.dashboard');
-});
+Route::get('/customer/artikel', [ArtikelController::class, 'reading'])->name('customer.artikel');
+Route::get('/landing_page/artikel', [ArtikelController::class, 'read'])->name('landing_page.artikel');
+
+
 
 
 Route::get('/menus/create', [MitraController::class, 'listNamaToko'])->name('menus.create');
@@ -147,3 +156,6 @@ Route::middleware(['auth'])->group(function () {
 Route::delete('cart/{rowId}', [CartController::class, 'destroy'])->name('cart.destroy');
 Route::patch('/cart/update/{rowId}', [CartController::class, 'update']);
 Route::get('/cart/total', [CartController::class, 'getTotal']);
+Route::get('/artikel/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
+Route::get('/landing_page/artikel/{id}', [ArtikelController::class, 'show'])->name('landing_page.show_artikel');
+Route::get('/customer/artikel/{id}', [ArtikelController::class, 'show_customer'])->name('customer.show_artikel');

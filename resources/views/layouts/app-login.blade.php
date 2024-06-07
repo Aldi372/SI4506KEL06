@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
 
-<body>
+<body class="d-flex flex-column" style="min-height: 100vh;">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ecede8;">
         <div class="container">
             <a class="navbar-brand" href="{{url('/')}}">
@@ -54,10 +54,10 @@
         </div>
     </nav>
 
-    <main>
+    <main class="flex-grow-1">
         @yield('content')
     </main>
-    </div>
     @include('layouts.footer')
+    </div>
 
 </html>

@@ -35,6 +35,7 @@ Route::get('/', function () {
 Route::get('/menu', [MenuController::class, 'landingPage']); 
 Route::get('/promo', [PromoController::class, 'landingPage']);
 Route::get('/menu_customer', [MenuController::class, 'landingPageCustomer']); 
+Route::post('/add_to_cart', [MenuController::class, 'addToCart']); 
 Route::get('/promo_customer', [PromoController::class, 'landingPageCustomer']);
 
 
@@ -91,20 +92,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/artikel/{artikel}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
         Route::put('/artikel/{artikel}', [ArtikelController::class, 'update'])->name('artikel.update');
         Route::delete('/artikel/{artikel}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
-        Route::get('/mitra/create', [MitraController::class, 'create'])->name('mitra.create');
-        Route::post('/mitra/store', [MitraController::class, 'store'])->name('mitra.store');
-        Route::get('/verifikasi_mitra', function (){
-            return view('admin.list_mitra.verifikasi');
-        });
-        Route::get('/dashboard', function (){
-            return view('admin.dashboard');
-        });
-        Route::get('/verifikasi_mitra', [MitraController::class, 'index'])->name('verifikasi_mitra');
-        Route::get('/lihat_data_mitra', function (){
-            return view('admin.list_mitra.show');
-        });
-        Route::get('/mitra/{id}', [MitraController::class, 'show'])->name('admin.list_mitra.show');
-        Route::post('/mitra/{id}/accept', [MitraController::class, 'accept'])->name('mitra.accept');
     });
 });
 
@@ -126,36 +113,54 @@ Route::middleware('auth')->group(function () {
         Route::get('dashboard', function () {
             return view('customer.dashboard');
         })->name('customer.dashboard');
-    Route::post('/add_to_cart', [MenuController::class, 'addToCart'])->name('addToCart');
-    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    Route::delete('/clear-cart', [CartController::class, 'clearCart'])->name('clear.cart');
-    Route::post('/apply-promo', [CartController::class, 'applyPromo'])->name('applyPromo');
-    Route::post('/cart/store-order', [PromoController::class, 'storeOrder'])->name('orders.create');
-    Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
-    Route::get('/customer/orders', [CustomerController::class, 'orders'])->name('customer.orders');
-    Route::get('/customer/artikel/{id}', [ArtikelController::class, 'show_customer'])->name('customer.show_artikel');
-    Route::get('/customer/history', [OrderController::class, 'customerHistory'])->name('customer.history');
-    Route::get('/customer/rating/{order}', [OrderController::class, 'ratingForm'])->name('customer.rating.form');
-    Route::post('/customer/rating/{order}', [OrderController::class, 'submitRating'])->name('customer.rating.submit');
-    Route::get('/customer/review/{order}', [OrderController::class, 'showReview'])->name('customer.review');
-    Route::get('/customer/menu', [MenuController::class, 'landingPageCustomer'])->name('customer.menu');
-    Route::get('/registrasi_mitra', function (){
-        return view('customer.form');
     });
-    Route::get('/profil_customer', function (){
-        return view('customer.profil');
-    });
-    Route::get('/customer/artikel', [ArtikelController::class, 'reading'])->name('customer.artikel');
-    });
-    Route::delete('cart/{rowId}', [CartController::class, 'destroy'])->name('cart.destroy');
-    Route::patch('/cart/update/{rowId}', [CartController::class, 'update']);
-    Route::get('/cart/total', [CartController::class, 'getTotal']);
-    Route::post('/add_to_cart', [MenuController::class, 'addToCart']); 
+Route::post('/add_to_cart', [MenuController::class, 'addToCart'])->name('addToCart');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::delete('/clear-cart', [CartController::class, 'clearCart'])->name('clear.cart');
+Route::post('/apply-promo', [CartController::class, 'applyPromo'])->name('applyPromo');
+Route::post('/cart/store-order', [PromoController::class, 'storeOrder'])->name('orders.create');
+Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+Route::get('/customer/orders', [CustomerController::class, 'orders'])->name('customer.orders');
 });
+
+Route::get('/registrasi_mitra', function (){
+    return view('customer.form');
+});
+Route::get('/mitra/create', [MitraController::class, 'create'])->name('mitra.create');
+Route::post('/mitra/store', [MitraController::class, 'store'])->name('mitra.store');
+Route::get('/verifikasi_mitra', function (){
+    return view('admin.list_mitra.verifikasi');
+});
+Route::get('/dashboard', function (){
+    return view('admin.dashboard');
+});
+Route::get('/verifikasi_mitra', [MitraController::class, 'index'])->name('verifikasi_mitra');
+Route::get('/lihat_data_mitra', function (){
+    return view('admin.list_mitra.show');
+});
+Route::get('/mitra/{id}', [MitraController::class, 'show'])->name('admin.list_mitra.show');
+Route::post('/mitra/{id}/accept', [MitraController::class, 'accept'])->name('mitra.accept');
+Route::get('/profil_customer', function (){
+    return view('customer.profil');
+});
+Route::get('/customer/artikel', [ArtikelController::class, 'reading'])->name('customer.artikel');
 Route::get('/landing_page/artikel', [ArtikelController::class, 'read'])->name('landing_page.artikel');
+
+
+
+
 Route::get('/menus/create', [MitraController::class, 'listNamaToko'])->name('menus.create');
 Route::middleware(['auth'])->group(function () {
     Route::resource('menus', MenuController::class);
 });
+Route::delete('cart/{rowId}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::patch('/cart/update/{rowId}', [CartController::class, 'update']);
+Route::get('/cart/total', [CartController::class, 'getTotal']);
 Route::get('/artikel/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
 Route::get('/landing_page/artikel/{id}', [ArtikelController::class, 'show'])->name('landing_page.show_artikel');
+Route::get('/customer/artikel/{id}', [ArtikelController::class, 'show_customer'])->name('customer.show_artikel');
+Route::get('/customer/history', [OrderController::class, 'customerHistory'])->name('customer.history');
+Route::get('/customer/rating/{order}', [OrderController::class, 'ratingForm'])->name('customer.rating.form');
+Route::post('/customer/rating/{order}', [OrderController::class, 'submitRating'])->name('customer.rating.submit');
+Route::get('/customer/review/{order}', [OrderController::class, 'showReview'])->name('customer.review');
+Route::get('/customer/menu', [MenuController::class, 'landingPageCustomer'])->name('customer.menu');

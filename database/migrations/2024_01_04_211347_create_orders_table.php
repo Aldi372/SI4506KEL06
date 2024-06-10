@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->integer('quantity');
             $table->decimal('total_price', 8, 2);
             $table->enum('pembayaran', ['QRIS', 'CASH']);
-            $table->enum('status', ['Pesanan Sedang Dipersiapkan', 'Pesanan Siap'])->default('Pesanan Sedang Dipersiapkan');
+            $table->enum('status', ['Pesanan Belum Diterima','Pesanan Sedang Dipersiapkan', 'Pesanan Siap'])->default('Pesanan Belum Diterima');
             $table->timestamps();
         });
     }

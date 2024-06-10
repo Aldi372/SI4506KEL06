@@ -119,12 +119,23 @@ class MenuController extends Controller
 
         return view('landing_page.menu', compact('menus','stocks'));
     }
-    public function landingPageCustomer()
+    public function landingPageCustomer(Request $request)
     {
-        $menus = Menu::all();
+        $query = Menu::query();
+
+
+        if ($request->has('category') && $request->category != '') {
+            $query->where('kategori_menu', $request->category);
+        }
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('nama_menu', 'LIKE', '%' . $request->search . '%');
+        }
+
+        $menus = $query->get();
         $stocks = Stock::all();
 
-        return view('customer.menu', compact('menus','stocks'));
+        return view('customer.menu', compact('menus', 'stocks'));
     }
     
     public function addToCart(Request $request)
@@ -141,4 +152,5 @@ class MenuController extends Controller
     
         return redirect()->back()->with('success', 'Item added to cart');
     }
+    
 }

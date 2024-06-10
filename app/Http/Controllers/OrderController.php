@@ -8,6 +8,7 @@ use App\Models\Mitra;
 use App\Models\Promo;
 use App\Models\User;
 use App\Models\Stock;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -174,4 +175,53 @@ class OrderController extends Controller
 
         return redirect()->route('orders.index')->with('success', 'Order berhasil dihapus dan stok dikembalikan');
     }
+    public function customerHistory()
+    {
+
+        $orders = Order::where('user_id', Auth::id())
+                        ->where('status', 'Pesanan Siap')
+                        ->whereDoesntHave('rating') 
+                        ->with('menu')
+                        ->get();
+    
+        return view('customer.history', compact('orders'));
+    }
+    
+    public function showReview(Order $order)
+    {
+        $rating = $order->rating;
+        return view('customer.review', compact('order', 'rating'));
+    }
+
+    public function ratingForm(Order $order)
+    {
+        if ($order->rating) {
+            return redirect()->route('customer.history')->with('error', 'Anda sudah memberikan rating untuk pesanan ini.');
+        }
+        return view('customer.rating', compact('order'));
+    }
+
+
+    public function submitRating(Request $request, Order $order)
+    {
+        $request->validate([
+            'rating' => 'required|integer|between:1,5',
+            'comment' => 'nullable|string',
+        ]);
+
+        if ($order->rating) {
+            return redirect()->route('customer.history')->with('error', 'Anda sudah memberikan rating untuk pesanan ini.');
+        }
+
+        $rating = new Rating([
+            'rating' => $request->rating,
+            'comment' => $request->comment,
+            'order_id' => $order->id
+        ]);
+
+        $order->rating()->save($rating);
+
+        return redirect()->route('customer.history')->with('success', 'Terima kasih telah memberikan rating!');
+    }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,7 +9,8 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'menu_id', 'promo_id', 'user_id', 'quantity', 'total_price'];
+    protected $fillable = ['name', 'menu_id', 'promo_id', 'user_id', 'quantity', 'total_price', 'status'];
+
     public function menu()
     {
         return $this->belongsTo(Menu::class);
@@ -22,5 +24,10 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function rating()
+    {
+        return $this->hasOne(Rating::class, 'order_id');
     }
 }

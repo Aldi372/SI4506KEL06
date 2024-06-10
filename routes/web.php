@@ -159,3 +159,7 @@ Route::get('/cart/total', [CartController::class, 'getTotal']);
 Route::get('/artikel/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
 Route::get('/landing_page/artikel/{id}', [ArtikelController::class, 'show'])->name('landing_page.show_artikel');
 Route::get('/customer/artikel/{id}', [ArtikelController::class, 'show_customer'])->name('customer.show_artikel');
+Route::get('/customer/history', [OrderController::class, 'customerHistory'])->name('customer.history');
+Route::get('/customer/rating/{order}', [OrderController::class, 'ratingForm'])->name('customer.rating.form');
+Route::post('/customer/rating/{order}', [OrderController::class, 'submitRating'])->name('customer.rating.submit');
+Route::get('/customer/review/{order}', [OrderController::class, 'showReview'])->name('customer.review');

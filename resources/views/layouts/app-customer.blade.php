@@ -77,6 +77,8 @@
                             <li><a class="dropdown-item" href="#">Profil</a></li>
                             <li><a class="dropdown-item" href="{{ url('/customer/orders')}}">Notifikasi</a></li>
                             <li><a class="dropdown-item" href="{{ url('registrasi_mitra') }}">Registrasi Mitra</a></li>
+                            <li><a class="dropdown-item" href="{{ route('customer.history') }}">Historis Pemesanan</a>
+                            </li>
                             <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                         </ul>
                     </li>

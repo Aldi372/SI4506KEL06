@@ -2,76 +2,73 @@
 
 @section('content')
 
-<div class="container">
-    <div class="row gutters">
-        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="account-settings">
-                        <div class="user-profile">
-                            <div class="user-avatar">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin" />
-                            </div>
-                            <h5 class="user-name" value="{{ $profil_customer->name }}"></h5>
-                            <h6 class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                                    data-cfemail="9ce5e9f7f5dcd1fde4ebf9f0f0b2fff3f1">[email&#160;protected]</a></h6>
-                        </div>
-                        <div class="about">
-                            <h5>About</h5>
-                            <p>I'm Yuki. Full Stack Designer I enjoy creating user-centric, delightful and human
-                                experiences.</p>
-                        </div>
-                    </div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Profil Saya</h5>
                 </div>
-            </div>
-        </div>
-        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-            <div class="card h-100">
                 <div class="card-body">
-                    <div class="row gutters">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <h6 class="mb-2 text-primary">Personal Details</h6>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label for="name">Nama Lengkap</label>
-                                <input type="text" class="form-control" id="name" placeholder="Enter full name" />
+                    @if(session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
+                    <form action="{{ route('customer.update_profil') }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <label for="foto">Foto Profil</label>
+                                <div class="text-center mb-4">
+                                    <img src="{{ $profil_customer->foto ? asset('storage/images/foto_profil/' . $profil_customer->foto) : 'https://bootdey.com/img/Content/avatar/avatar7.png' }}"
+                                        alt="{{ $profil_customer->name }}" class="rounded-circle img-thumbnail"
+                                        width="150">
+                                    <h5 class="text-center mt-2">{{ $profil_customer->name }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="name">Nama Lengkap</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        placeholder="Enter full name" value="{{ $profil_customer->name }}" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="eMail">Email</label>
+                                    <input type="email" class="form-control" id="eMail" name="email"
+                                        placeholder="Enter email ID" value="{{ $profil_customer->email }}" readonly />
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">No. Hp</label>
+                                    <input type="text" class="form-control" id="phone" name="phone"
+                                        placeholder="Enter phone number" value="{{ $profil_customer->no_hp }}" />
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="website">Tempat Lahir</label>
+                                            <input type="text" class="form-control" id="website" name="birthplace"
+                                                placeholder="Enter birth place"
+                                                value="{{ $profil_customer->tempat_lahir }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="birthdate">Tanggal Lahir</label>
+                                            <input type="date" class="form-control" id="birthdate" name="birthdate"
+                                                placeholder="Enter birth date"
+                                                value="{{ $profil_customer->tanggal_lahir }}" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <button type="button" id="cancel" name="cancel"
+                                        class="btn btn-secondary">Cancel</button>
+                                    <button type="submit" id="update" name="update"
+                                        class="btn btn-primary">Update</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label for="eMail">Email</label>
-                                <input type="email" class="form-control" id="eMail" placeholder="Enter email ID" />
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label for="phone">No. Hp</label>
-                                <input type="text" class="form-control" id="phone" placeholder="Enter phone number" />
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label for="website">Tempat Lahir</label>
-                                <input type="url" class="form-control" id="website" placeholder="Website url" />
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label for="website">Tanggal Lahir</label>
-                                <input type="url" class="form-control" id="website" placeholder="Website url" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row gutters">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <div class="text-right">
-                                <button type="button" id="submit" name="submit"
-                                    class="btn btn-secondary">Cancel</button>
-                                <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -86,6 +83,5 @@
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript"></script>
-
 
 @endsection

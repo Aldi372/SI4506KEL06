@@ -170,6 +170,7 @@ return [
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
     ])->toArray(),
+    
 
     /*
     |--------------------------------------------------------------------------

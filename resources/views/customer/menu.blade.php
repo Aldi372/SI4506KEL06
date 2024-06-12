@@ -52,7 +52,6 @@
                         <span></span>
                     </h5>
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="menu-coffee">Stock: {{ \App\Helpers\MenuHelper::getStockQuantity($menu->id) }}</h5>
                         <div class="text-end">
                             <form action="{{ route('addToCart') }}" method="POST">
                                 @csrf

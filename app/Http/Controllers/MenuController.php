@@ -20,7 +20,7 @@ class MenuController extends Controller
         $mitra = Mitra::where('name', $user->name)->first();
 
         if ($mitra) {
-            $menus = Menu::where('nama_toko', $mitra->nama_toko)->simplePaginate(5);
+            $menus = Menu::where('nama_toko', $mitra->nama_toko)->simplePaginate(10);
         } else {
             $menus = collect();
         }
@@ -41,7 +41,7 @@ class MenuController extends Controller
         $this->validate($request, [
             'nama_menu' => 'required',
             'kategori_menu' => 'required',
-            'gambar_menu' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gambar_menu' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             'harga_menu' => 'required|numeric',
         ]);
 

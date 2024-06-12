@@ -12,6 +12,8 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MitraController;
 use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\RatingController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ProfileCustomerController;
 use Symfony\Component\HttpKernel\Profiler\Profile;
@@ -104,7 +106,8 @@ Route::middleware(['auth', 'role:mitra'])->group(function () {
             return view('mitra.dashboard');
         })->name('mitra.dashboard');
     });
-
+    Route::get('/mitra/profil', 'App\Http\Controllers\MitraController@profil')->middleware('role:mitra')->name('mitra.profil');
+    Route::put('/mitra/update/{id}', 'App\Http\Controllers\MitraController@update')->name('mitra.update');
 });
 
 
@@ -113,7 +116,9 @@ Route::middleware('auth')->group(function () {
         Route::get('dashboard', function () {
             return view('customer.dashboard');
         })->name('customer.dashboard');
-    });
+        });
+Route::get('/customer/profil', [ProfileCustomerController::class, 'showProfile'])->name('customer.profil');
+Route::put('/customer/profil', [ProfileCustomerController::class, 'updateProfile'])->name('customer.update_profil');
 Route::post('/add_to_cart', [MenuController::class, 'addToCart'])->name('addToCart');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::delete('/clear-cart', [CartController::class, 'clearCart'])->name('clear.cart');
@@ -140,9 +145,7 @@ Route::get('/lihat_data_mitra', function (){
 });
 Route::get('/mitra/{id}', [MitraController::class, 'show'])->name('admin.list_mitra.show');
 Route::post('/mitra/{id}/accept', [MitraController::class, 'accept'])->name('mitra.accept');
-Route::get('/profil_customer', function (){
-    return view('customer.profil');
-});
+
 Route::get('/customer/artikel', [ArtikelController::class, 'reading'])->name('customer.artikel');
 Route::get('/landing_page/artikel', [ArtikelController::class, 'read'])->name('landing_page.artikel');
 
@@ -157,10 +160,27 @@ Route::delete('cart/{rowId}', [CartController::class, 'destroy'])->name('cart.de
 Route::patch('/cart/update/{rowId}', [CartController::class, 'update']);
 Route::get('/cart/total', [CartController::class, 'getTotal']);
 Route::get('/artikel/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
-Route::get('/landing_page/artikel/{id}', [ArtikelController::class, 'show'])->name('landing_page.show_artikel');
 Route::get('/customer/artikel/{id}', [ArtikelController::class, 'show_customer'])->name('customer.show_artikel');
 Route::get('/customer/history', [OrderController::class, 'customerHistory'])->name('customer.history');
 Route::get('/customer/rating/{order}', [OrderController::class, 'ratingForm'])->name('customer.rating.form');
 Route::post('/customer/rating/{order}', [OrderController::class, 'submitRating'])->name('customer.rating.submit');
 Route::get('/customer/review/{order}', [OrderController::class, 'showReview'])->name('customer.review');
 Route::get('/customer/menu', [MenuController::class, 'landingPageCustomer'])->name('customer.menu');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', function () {
+        $role = Auth::user()->role;
+        if ($role == 'admin') {
+            return redirect()->route('admin.dashboard');
+        } elseif ($role == 'mitra') {
+            return redirect()->route('mitra.dashboard');
+        } else {
+            return redirect()->route('customer.dashboard');
+        }
+    })->name('home');
+});
+Route::get('/ratings', [RatingController::class, 'index'])->name('ratings.index');
+Route::get('/sales', [OrderController::class, 'sales'])->name('sales');
+Route::get('/artikel', [ArtikelController::class, 'reading_landing'])->name('landing_page.artikel');
+Route::get('/artikel/{id}', [ArtikelController::class, 'show_landing'])->name('landing_page.show_artikel');
+Route::get('/customer/list_mitra', [MitraController::class, 'listMitra'])->name('customer.list_mitra');

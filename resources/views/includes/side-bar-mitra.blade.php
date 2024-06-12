@@ -18,12 +18,12 @@
                     Menu
                 </a>
             </li>
-            <li class="sidebar-item">
+            <!-- <li class="sidebar-item">
                 <a href="{{url('stocks')}}" class="sidebar-link">
                     <i class="fa-solid fa-archive pe-2"></i>
                     Stock
                 </a>
-            </li>
+            </li> -->
             <li class="sidebar-item">
                 <a href="{{url('orders')}}" class="sidebar-link">
                     <i class="fa-solid fa-comment-dollar pe-2"></i>
@@ -34,6 +34,16 @@
                 <a href="/chatify" class="sidebar-link">
                     <i class="fa-solid fa-comment-dollar pe-2"></i>
                     Chat
+                </a>
+            </li>
+            <a href="{{ route('ratings.index') }}" class="sidebar-link">
+                <i class="fa-solid fa-star pe-2"></i>
+                Rating
+            </a>
+            <li class="sidebar-item">
+                <a href="{{ route('sales') }}" class="sidebar-link">
+                    <i class="fa-solid fa-shop pe-2"></i>
+                    Penjualan
                 </a>
             </li>
         </ul>

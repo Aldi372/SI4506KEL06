@@ -11,6 +11,7 @@ use App\Models\Stock;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -117,15 +118,15 @@ class OrderController extends Controller
             'promo_id' => 'nullable|exists:promos,id',
             'user_id' => 'required|exists:users,id',
             'quantity' => 'required|integer|min:1',
-            'status' => 'in:Pesanan Belum Diterima,Pesanan Sedang Diproses,Pesanan Siap',
+            'status' => 'required|in:Pesanan Belum Diterima,Pesanan Sedang Dipersiapkan,Pesanan Siap,Pesanan Dibatalkan',
         ]);
 
         $menu = Menu::findOrFail($request->input('menu_id'));
         $promo = $request->input('promo_id') ? Promo::findOrFail($request->input('promo_id')) : null;
         $user = User::findOrFail($request->input('user_id'));
 
-
         $previousStatus = $order->status;
+        $previousQuantity = $order->quantity;
 
         $order->menu()->associate($menu);
         $order->promo()->associate($promo);
@@ -133,18 +134,37 @@ class OrderController extends Controller
         $order->quantity = $request->input('quantity');
         $order->total_price = (($menu->harga_menu * $request->input('quantity')) - ($menu->harga_menu * ($promo ? $promo->nilai_potongan : 0)));
         $order->status = $request->input('status');
-        
 
-        if (
-            in_array($previousStatus, ['Pesanan Belum Diterima', 'Pesanan Siap']) &&
-            in_array($request->input('status'), ['Pesanan Belum Diterima', 'Pesanan Siap'])
-        ) {
-            // Tidak melakukan pengurangan stok
-        } else {
-            // Lakukan pengurangan stok
-            $stock = Stock::where('menu_id', $menu->id)->firstOrFail();
+        // Ambil stok terkait menu
+        $stock = Stock::where('menu_id', $menu->id)->firstOrFail();
+
+        if ($previousStatus === 'Pesanan Belum Diterima' && $request->input('status') === 'Pesanan Sedang Dipersiapkan') {
+            // Jika status sebelumnya 'Pesanan Belum Diterima' dan diubah menjadi 'Pesanan Sedang Dipersiapkan',
+            // Tidak perlu melakukan apa pun karena tidak ada perubahan pada stok saat persiapan
+        } elseif ($previousStatus === 'Pesanan Sedang Dipersiapkan' && $request->input('status') === 'Pesanan Belum Diterima') {
+            // Jika status sebelumnya 'Pesanan Sedang Dipersiapkan' dan diubah kembali menjadi 'Pesanan Belum Diterima',
+            // Kembalikan jumlah stok yang telah dikurangi saat persiapan
+            $stock->quantity += $previousQuantity;
+            $stock->save();
+        } elseif ($previousStatus === 'Pesanan Belum Diterima' && $request->input('status') === 'Pesanan Siap') {
+            // Jika status sebelumnya 'Pesanan Belum Diterima' dan diubah menjadi 'Pesanan Siap',
+            // Kurangi stok berdasarkan jumlah yang dipesan
+            if ($stock->quantity < $request->input('quantity')) {
+                return redirect()->back()->with('error', 'Stok tidak mencukupi untuk mengubah status menjadi Pesanan Siap.');
+            }
             $stock->quantity -= $request->input('quantity');
             $stock->save();
+        } elseif ($previousStatus === 'Pesanan Siap' && $request->input('status') === 'Pesanan Belum Diterima') {
+            // Jika status sebelumnya 'Pesanan Siap' dan diubah kembali menjadi 'Pesanan Belum Diterima',
+            // Kembalikan jumlah stok yang telah dikurangi saat persiapan dan kurangi stok yang baru dipesan
+            $stock->quantity += $previousQuantity;
+            if ($stock->quantity < $request->input('quantity')) {
+                return redirect()->back()->with('error', 'Stok tidak mencukupi untuk mengubah status kembali menjadi Pesanan Belum Diterima.');
+            }
+            $stock->quantity -= $request->input('quantity');
+            $stock->save();
+        } else {
+            // Jika tidak ada perubahan status yang mempengaruhi stok, tidak perlu melakukan apa pun
         }
 
         $order->save();
@@ -223,5 +243,32 @@ class OrderController extends Controller
 
         return redirect()->route('customer.history')->with('success', 'Terima kasih telah memberikan rating!');
     }
+    public function sales()
+    {
+        $user = Auth::user();
+        $mitra = Mitra::where('name', $user->name)->first();
+
+        if (!$mitra) {
+            return redirect()->route('home')->with('error', 'Anda tidak terkait dengan mitra manapun.');
+        }
+
+        // Ambil tanggal dari request atau default ke hari ini
+        $date = request()->input('date', Carbon::today()->toDateString());
+
+        // Ambil daftar orders yang terkait dengan toko dari mitra pada tanggal tertentu
+        $orders = Order::whereHas('menu', function ($query) use ($mitra) {
+                $query->where('nama_toko', $mitra->nama_toko);
+            })
+            ->whereDate('created_at', $date)
+            ->with('menu')
+            ->get();
+
+        // Hitung total penjualan pada tanggal tersebut
+        $totalSales = $orders->sum('total_price');
+
+        return view('sales.index', compact('orders', 'totalSales', 'date'));
+    }
+
+    
 
 }

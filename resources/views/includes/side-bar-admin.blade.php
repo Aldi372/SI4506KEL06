@@ -42,6 +42,12 @@
                     Artikel
                 </a>
             </li>
+            <li class="sidebar-item">
+                <a href="/chatify" class="sidebar-link">
+                    <i class="fa-solid fa-comment pe-2"></i>
+                    Chat
+                </a>
+            </li>
         </ul>
     </div>
 </aside>

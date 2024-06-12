@@ -6,6 +6,7 @@ use App\Models\Artikel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ArtikelController extends Controller
 {
@@ -25,7 +26,7 @@ class ArtikelController extends Controller
         $validator = Validator::make($request->all(), [
             'judul' => 'required|max:255',
             'topic' => 'required|in:Kesehatan,Kecantikan,Lifestyle',
-            'sampul' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'sampul' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
             'jam_buat' => 'required|date_format:H:i',
             'hari_buat' => 'required|date',
             'isi' => 'required',
@@ -38,7 +39,12 @@ class ArtikelController extends Controller
         $artikel = new Artikel;
         $artikel->judul = $request->judul;
         $artikel->topic = $request->topic;
-        $artikel->sampul = $request->file('sampul')->store('sampul', 'public');
+
+
+        $sampul = $request->file('sampul');
+        $sampul_path = $sampul->storeAs('images/sampul', $sampul->getClientOriginalName(), 'public');
+        $artikel->sampul = $sampul_path;
+
         $artikel->jam_buat = $request->jam_buat;
         $artikel->penulis = Auth::user()->name;
         $artikel->hari_buat = $request->hari_buat;
@@ -47,6 +53,7 @@ class ArtikelController extends Controller
 
         return redirect()->route('artikel.index')->with('success', 'Artikel berhasil ditambahkan.');
     }
+
 
     public function show($id)
     {
@@ -61,30 +68,35 @@ class ArtikelController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-  
+{
+    $validator = Validator::make($request->all(), [
+        'judul' => 'required|max:255',
+        'topic' => 'required|in:Kesehatan,Kecantikan,Lifestyle',
+        'sampul' => 'image|mimes:jpeg,png,jpg,gif|max:10240', 
+        'isi' => 'required',
+    ]);
 
-        $validator = Validator::make($request->all(), [
-            'judul' => 'required|max:255',
-            'topic' => 'required|in:Kesehatan,Kecantikan,Lifestyle',
-            'sampul' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'isi' => 'required',
-        ]);
-        $artikel = Artikel::find($id);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        $artikel->judul = $request->judul;
-        $artikel->topic = $request->topic;
-        if ($request->hasFile('sampul')) {
-            $artikel->sampul = $request->file('sampul')->store('sampul', 'public');
-        }
-        $artikel->isi = $request->isi;
-        $artikel->save();
-
-        return redirect()->route('artikel.index')->with('success', 'Artikel berhasil diperbarui.');
+    if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
     }
+
+    $artikel = Artikel::find($id);
+    $artikel->judul = $request->judul;
+    $artikel->topic = $request->topic;
+
+
+    if ($request->hasFile('sampul')) {
+        Storage::disk('public')->delete($artikel->sampul);
+
+        $artikel->sampul = $request->file('sampul')->storeAs('images/sampul', $request->file('sampul')->getClientOriginalName(), 'public');
+    }
+
+    $artikel->isi = $request->isi;
+    $artikel->save();
+
+    return redirect()->route('artikel.index')->with('success', 'Artikel berhasil diperbarui.');
+}
+
 
     public function destroy($id)
     {
@@ -109,4 +121,17 @@ class ArtikelController extends Controller
         $artikel = Artikel::find($id);
         return view('customer.show_artikel', compact('artikel'));
     }
+
+    public function reading_landing()
+    {
+        $artikel = Artikel::all();
+        return view('landing_page.artikel', compact('artikel'));
+    }
+
+    public function show_landing($id)
+    {
+        $artikel = Artikel::findOrFail($id);
+        return view('landing_page.show_artikel', compact('artikel'));
+    }
+
 }

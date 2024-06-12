@@ -40,7 +40,7 @@
                         <a class="nav-link" href="{{ url('menu') }}">Menu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('landing_page.artikel')}}">Artikel</a>
+                        <a class="nav-link" href="{{ route('landing_page.artikel') }}">Artikel</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('login') }}">Login</a>

@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Mitra;
 use App\Models\User;
+use App\Models\Menu;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
 
 class MitraController extends Controller
 {
+    
     public function store(Request $request)
         {
             $validatedData = $request->validate([
@@ -82,4 +84,48 @@ class MitraController extends Controller
             $mitras = Mitra::where('status', 'ACCEPT')->get();
             return view('admin.daftar_toko.index', compact('mitras'));
         }
+
+    public function mitraDashboard()
+        {
+            $user = Auth::user();
+            $mitra = Mitra::where('name', $user->name)->first();
+
+        
+            return view('mitra.dashboard', compact('mitra'));
+        }
+    public function profil()
+        {
+            $user = Auth::user();
+            $mitra = Mitra::where('name', $user->name)->first();
+        
+            return view('mitra.profil', compact('mitra'));
+        }
+    public function update(Request $request, $id)
+        {
+            $validatedData = $request->validate([
+                'nama_toko' => 'required',
+                'no_hp_toko' => 'required',
+                'kategori' => 'required',
+                'alamat_toko' => 'required',
+            ]);
+        
+            $mitra = Mitra::findOrFail($id);
+            $mitra->nama_toko = $request->nama_toko;
+            $mitra->no_hp_toko = $request->no_hp_toko;
+            $mitra->kategori = $request->kategori;
+            $mitra->alamat_toko = $request->alamat_toko;
+            $mitra->save();
+
+            Menu::where('nama_toko', $mitra->name)
+            ->update(['nama_toko' => $request->nama_toko]);
+        
+            return redirect()->route('mitra.dashboard')->with('success', 'Data toko berhasil diperbarui.');
+        }
+    public function listMitra()
+        {
+            $mitras = Mitra::all(['nama_toko', 'name']);
+            return view('customer.list_mitra', compact('mitras'));
+        }
+        
+
 }

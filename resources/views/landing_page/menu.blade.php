@@ -44,7 +44,7 @@
         @foreach($menus as $menu)
         <div class="col-md-3 py-0 py-md-0">
             <div class="card border-0">
-                <img src="{{ asset($menu->gambar_menu) }}" alt="{{ $menu->nama_menu }}">
+                <img src="{{ asset($menu->gambar_menu) }}" alt="{{ $menu->nama_menu }}" class="img-thumbnail">
                 <div class="card-body">
                     <h3 class="menu-coffee">{{ $menu->nama_menu }}</h3>
                     <h5 class="menu-coffee">{{ $menu->nama_toko }}</h5>

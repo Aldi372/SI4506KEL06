@@ -36,7 +36,7 @@
     <div class="row" style="margin-top: 30px;">
         <div class="col-md-3 py-0 py-md-0">
             <div class="card border-0">
-                <img src="{{ asset('images/menu/[Roti dan Kue] Kue Tiramissu.png') }}" alt="">
+                <img src="{{ asset('images/menu/[Roti dan Kue] Kue Tiramissu.png') }}" alt="" class="img-thumbnail">
                 <div class="card-body">
                     <h3 class="menu-coffee">Kue Tiramissu</h3>
                     <h5 class="menu-coffee">Rp 20.000 <span class="line-stike">Rp 25.000 </span></h5>
@@ -48,7 +48,7 @@
         <div class="row" style="margin-top: 30px;">
             <div class="col-md-3 py-0 py-md-0">
                 <div class="card border-0">
-                    <img src="{{ asset('images/menu/[Makanan Berat] Mie Dokdok.png') }}" alt="">
+                    <img src="{{ asset('images/menu/[Makanan Berat] Mie Dokdok.png') }}" alt="" class="img-thumbnail">
                     <div class="card-body">
                         <h3 class="menu-coffee">Mie Dokdok</h3>
                         <h5 class="menu-coffee">Rp 15.000 <span></span></h5>
@@ -58,7 +58,7 @@
             </div>
             <div class="col-md-3 py-0 py-md-0">
                 <div class="card border-0">
-                    <img src="{{ asset('images/menu/[Makanan Berat] Nasi Goreng.png') }}" alt="">
+                    <img src="{{ asset('images/menu/[Makanan Berat] Nasi Goreng.png') }}" alt="" class="img-thumbnail">
                     <div class="card-body">
                         <h3 class="menu-coffee">Nasi Goreng</h3>
                         <h5 class="menu-coffee">Rp 25.000 <span></span></h5>
@@ -68,7 +68,8 @@
             </div>
             <div class="col-md-3 py-0 py-md-0">
                 <div class="card border-0">
-                    <img src="{{ asset('images/menu/[Makanan Ringan] Kentang Goreng.png') }}" alt="">
+                    <img src="{{ asset('images/menu/[Makanan Ringan] Kentang Goreng.png') }}" alt=""
+                        class="img-thumbnail">
                     <div class="card-body">
                         <h3 class="menu-coffee">Kentang Goreng</h3>
                         <h5 class="menu-coffee">Rp 10.000 <span></span></h5>

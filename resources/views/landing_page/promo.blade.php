@@ -8,7 +8,7 @@
         @foreach($promos as $promo)
         <div class="col-md-3 py-0 py-md-0">
             <div class="card border-0">
-                <img src="{{ asset($promo->gambar_promo) }}" alt="{{ $promo->nama_promo }}">
+                <img src="{{ asset($promo->gambar_promo) }}" alt="{{ $promo->nama_promo }}" class="img-thumbnail">
                 <div class="card-body">
                     <h3 class="menu-coffee">{{ $promo->nama_promo }}</h3>
                 </div>

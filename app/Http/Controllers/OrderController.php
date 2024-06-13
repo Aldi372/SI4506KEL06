@@ -112,30 +112,41 @@ class OrderController extends Controller
     }
 
     public function update(Request $request, Order $order)
-    {
-        $request->validate([
-            'menu_id' => 'required|exists:menus,id',
-            'promo_id' => 'nullable|exists:promos,id',
-            'user_id' => 'required|exists:users,id',
-            'quantity' => 'required|integer|min:1',
-            'status' => 'required|in:Pesanan Belum Diterima,Pesanan Sedang Dipersiapkan,Pesanan Siap,Pesanan Dibatalkan',
-        ]);
+{
+    $request->validate([
+        'menu_id' => 'required|exists:menus,id',
+        'promo_id' => 'nullable|exists:promos,id',
+        'user_id' => 'required|exists:users,id',
+        'quantity' => 'required|integer|min:1',
+        'status' => 'required|in:Pesanan Belum Diterima,Pesanan Sedang Dipersiapkan,Pesanan Siap,Pesanan Dibatalkan',
+    ]);
 
-        $menu = Menu::findOrFail($request->input('menu_id'));
-        $promo = $request->input('promo_id') ? Promo::findOrFail($request->input('promo_id')) : null;
-        $user = User::findOrFail($request->input('user_id'));
+    $menu = Menu::findOrFail($request->input('menu_id'));
+    $promo = $request->input('promo_id') ? Promo::findOrFail($request->input('promo_id')) : null;
+    $user = User::findOrFail($request->input('user_id'));
 
-        $order->menu()->associate($menu);
-        $order->promo()->associate($promo);
-        $order->user()->associate($user);
-        $order->quantity = $request->input('quantity');
-        $order->total_price = (($menu->harga_menu * $request->input('quantity')) - ($menu->harga_menu * ($promo ? $promo->nilai_potongan : 0)));
-        $order->status = $request->input('status');
+    $order->menu()->associate($menu);
+    $order->promo()->associate($promo);
+    $order->user()->associate($user);
+    $order->quantity = $request->input('quantity');
 
-        $order->save();
+    // Perbaikan perhitungan total harga dengan diskon
+    $subtotal = $menu->harga_menu * $request->input('quantity');
+    $discountAmount = 0;
 
-        return redirect()->route('orders.index')->with('success', 'Order berhasil diupdate');
-    }                                           
+    if ($promo) {
+        $discountAmount = $subtotal * ($promo->nilai_potongan / 100);
+        // Pastikan diskon tidak melebihi subtotal
+        $discountAmount = min($discountAmount, $subtotal);
+    }
+
+    $order->total_price = max($subtotal - $discountAmount, 0);
+    $order->status = $request->input('status');
+
+    $order->save();
+
+    return redirect()->route('orders.index')->with('success', 'Order berhasil diupdate');
+}                                 
 
 
 
@@ -218,10 +229,8 @@ class OrderController extends Controller
             return redirect()->route('home')->with('error', 'Anda tidak terkait dengan mitra manapun.');
         }
 
-        // Ambil tanggal dari request atau default ke hari ini
         $date = request()->input('date', Carbon::today()->toDateString());
 
-        // Ambil daftar orders yang terkait dengan toko dari mitra pada tanggal tertentu
         $orders = Order::whereHas('menu', function ($query) use ($mitra) {
                 $query->where('nama_toko', $mitra->nama_toko);
             })
@@ -229,7 +238,7 @@ class OrderController extends Controller
             ->with('menu')
             ->get();
 
-        // Hitung total penjualan pada tanggal tersebut
+
         $totalSales = $orders->sum('total_price');
 
         return view('sales.index', compact('orders', 'totalSales', 'date'));

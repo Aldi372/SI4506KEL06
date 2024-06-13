@@ -18,6 +18,7 @@ class CartController extends Controller
         $promos = Promo::all();
         return view('cart.index', compact('cartItems', 'promos'));
     }
+    
     public function clearCart()
     {
         Cart::destroy(); 

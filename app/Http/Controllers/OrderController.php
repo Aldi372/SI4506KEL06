@@ -125,9 +125,6 @@ class OrderController extends Controller
         $promo = $request->input('promo_id') ? Promo::findOrFail($request->input('promo_id')) : null;
         $user = User::findOrFail($request->input('user_id'));
 
-        $previousStatus = $order->status;
-        $previousQuantity = $order->quantity;
-
         $order->menu()->associate($menu);
         $order->promo()->associate($promo);
         $order->user()->associate($user);
@@ -135,42 +132,11 @@ class OrderController extends Controller
         $order->total_price = (($menu->harga_menu * $request->input('quantity')) - ($menu->harga_menu * ($promo ? $promo->nilai_potongan : 0)));
         $order->status = $request->input('status');
 
-        // Ambil stok terkait menu
-        $stock = Stock::where('menu_id', $menu->id)->firstOrFail();
-
-        if ($previousStatus === 'Pesanan Belum Diterima' && $request->input('status') === 'Pesanan Sedang Dipersiapkan') {
-            // Jika status sebelumnya 'Pesanan Belum Diterima' dan diubah menjadi 'Pesanan Sedang Dipersiapkan',
-            // Tidak perlu melakukan apa pun karena tidak ada perubahan pada stok saat persiapan
-        } elseif ($previousStatus === 'Pesanan Sedang Dipersiapkan' && $request->input('status') === 'Pesanan Belum Diterima') {
-            // Jika status sebelumnya 'Pesanan Sedang Dipersiapkan' dan diubah kembali menjadi 'Pesanan Belum Diterima',
-            // Kembalikan jumlah stok yang telah dikurangi saat persiapan
-            $stock->quantity += $previousQuantity;
-            $stock->save();
-        } elseif ($previousStatus === 'Pesanan Belum Diterima' && $request->input('status') === 'Pesanan Siap') {
-            // Jika status sebelumnya 'Pesanan Belum Diterima' dan diubah menjadi 'Pesanan Siap',
-            // Kurangi stok berdasarkan jumlah yang dipesan
-            if ($stock->quantity < $request->input('quantity')) {
-                return redirect()->back()->with('error', 'Stok tidak mencukupi untuk mengubah status menjadi Pesanan Siap.');
-            }
-            $stock->quantity -= $request->input('quantity');
-            $stock->save();
-        } elseif ($previousStatus === 'Pesanan Siap' && $request->input('status') === 'Pesanan Belum Diterima') {
-            // Jika status sebelumnya 'Pesanan Siap' dan diubah kembali menjadi 'Pesanan Belum Diterima',
-            // Kembalikan jumlah stok yang telah dikurangi saat persiapan dan kurangi stok yang baru dipesan
-            $stock->quantity += $previousQuantity;
-            if ($stock->quantity < $request->input('quantity')) {
-                return redirect()->back()->with('error', 'Stok tidak mencukupi untuk mengubah status kembali menjadi Pesanan Belum Diterima.');
-            }
-            $stock->quantity -= $request->input('quantity');
-            $stock->save();
-        } else {
-            // Jika tidak ada perubahan status yang mempengaruhi stok, tidak perlu melakukan apa pun
-        }
-
         $order->save();
 
         return redirect()->route('orders.index')->with('success', 'Order berhasil diupdate');
-    }
+    }                                           
+
 
 
     public function destroy(Order $order)

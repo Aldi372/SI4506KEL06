@@ -126,6 +126,17 @@ class MitraController extends Controller
             $mitras = Mitra::all(['nama_toko', 'name']);
             return view('customer.list_mitra', compact('mitras'));
         }
+        public function destroy($id)
+        {
+            $mitra = Mitra::findOrFail($id);
+            
+            if ($mitra->status === 'PENDING') {
+                $mitra->delete();
+                return redirect()->route('admin.dashboard')->with('success', 'Pendaftaran mitra berhasil dihapus.');
+            } else {
+                return redirect()->route('admin.dashboard')->with('error', 'Hanya pendaftaran mitra yang belum diverifikasi yang dapat dihapus.');
+            }
+        }
         
 
 }

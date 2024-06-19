@@ -130,13 +130,13 @@ class OrderController extends Controller
     $order->user()->associate($user);
     $order->quantity = $request->input('quantity');
 
-    // Perbaikan perhitungan total harga dengan diskon
+
     $subtotal = $menu->harga_menu * $request->input('quantity');
     $discountAmount = 0;
 
     if ($promo) {
         $discountAmount = $subtotal * ($promo->nilai_potongan / 100);
-        // Pastikan diskon tidak melebihi subtotal
+
         $discountAmount = min($discountAmount, $subtotal);
     }
 

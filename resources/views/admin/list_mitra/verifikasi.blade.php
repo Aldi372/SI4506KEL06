@@ -30,7 +30,8 @@
                             <a href="{{ route('admin.list_mitra.show', $mitra->id) }}"
                                 class="btn btn-warning btn-sm">Cek
                                 Data</a>
-                            <form action="#" style="display:inline">
+                            <form action="{{ route('admin.mitra.destroy', $mitra->id) }}" method="POST"
+                                style="display:inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm"

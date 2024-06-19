@@ -1,7 +1,7 @@
 @extends('layouts.app-home')
 
 @section('content')
-<section class="header-main border-bottom bg-white">
+<!-- <section class="header-main border-bottom bg-white">
     <div class="container-fluid">
         <div class="row p-2 pt-3 pb-3 d-flex align-items-center">
             <div class="col-md-2">
@@ -23,9 +23,9 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
-<div class="container" id="coffee">
+<!-- <div class="container" id="coffee">
     <div class="row my-4">
         <div class="col-12">
             <form action="{{ route('customer.menu') }}" method="GET">
@@ -38,27 +38,32 @@
                 </select>
             </form>
         </div>
-    </div>
-
-    <div class="row" style="margin-top: 30px;">
-        @foreach($menus as $menu)
-        <div class="col-md-3 py-0 py-md-0">
-            <div class="card border-0">
-                <img src="{{ asset($menu->gambar_menu) }}" alt="{{ $menu->nama_menu }}" class="img-thumbnail">
-                <div class="card-body">
-                    <h3 class="menu-coffee">{{ $menu->nama_menu }}</h3>
-                    <h5 class="menu-coffee">{{ $menu->nama_toko }}</h5>
-                    <h5 class="menu-coffee">{{ 'Rp ' . number_format($menu->harga_menu, 0, ',', '.') }}
-                        <span></span>
-                    </h5>
-                    <div class="d-flex justify-content-between align-items-center">
+    </div> -->
+<div class="mt-5">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="row" style="margin-top: 30px;">
+                @foreach($menus as $menu)
+                <div class="col-md-3 py-0 py-md-0">
+                    <div class="card border-0">
+                        <img src="{{ asset($menu->gambar_menu) }}" alt="{{ $menu->nama_menu }}" class="img-thumbnail">
+                        <div class="card-body">
+                            <h3 class="menu-coffee">{{ $menu->nama_menu }}</h3>
+                            <h5 class="menu-coffee">{{ $menu->nama_toko }}</h5>
+                            <h5 class="menu-coffee">{{ 'Rp ' . number_format($menu->harga_menu, 0, ',', '.') }}
+                                <span></span>
+                            </h5>
+                            <div class="d-flex justify-content-between align-items-center">
+                            </div>
+                        </div>
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
-        @endforeach
     </div>
 </div>
+
 
 <!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

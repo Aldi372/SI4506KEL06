@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class PromoController extends Controller
 {
-    // Menampilkan halaman promo dan keranjang
+
     public function index()
     {
         $promos = Promo::all();
@@ -20,14 +20,14 @@ class PromoController extends Controller
         return view('promos.index', compact('promos', 'cartItems'));
     }
 
-    // Menampilkan form tambah promo
+
     public function create()
     {
         $promo = new Promo();
         return view('promos.create', compact('promo'));
     }
 
-    // Menyimpan data promo baru
+
     public function store(Request $request)
     {
         $this->validatePromo($request);
@@ -45,19 +45,19 @@ class PromoController extends Controller
         return redirect()->route('promos.index')->with('success', 'Promo berhasil ditambahkan');
     }
 
-    // Menampilkan form edit promo
+
     public function edit($id)
     {
         $promo = Promo::findOrFail($id);
         return view('promos.edit', compact('promo'));
     }
 
-    // Mengupdate data promo
+
     public function update(Request $request, $id)
     {
         $promo = Promo::findOrFail($id);
         
-        // Ubah validasi gambar_promo menjadi opsional
+
         $request->validate([
             'nama_promo' => 'required|string',
             'gambar_promo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -90,7 +90,7 @@ class PromoController extends Controller
         }
     }
 
-    // Menghapus promo
+
     public function destroy($id)
     {
         $promo = Promo::findOrFail($id);
@@ -99,7 +99,7 @@ class PromoController extends Controller
         return redirect()->route('promos.index')->with('success', 'Promo berhasil dihapus');
     }
 
-    // Menampilkan halaman pembayaran
+
     public function showPaymentPage()
     {
         $promos = Promo::all();
@@ -146,14 +146,14 @@ class PromoController extends Controller
         return view('landing_page.promo', compact('promos'));
     }
 
-    // Landing page untuk pelanggan
+
     public function landingPageCustomer()
     {
         $promos = Promo::all();
         return view('customer.promo', compact('promos'));
     }
 
-    // Validasi data promo
+
     private function validatePromo(Request $request)
     {
         return $request->validate([
@@ -164,7 +164,7 @@ class PromoController extends Controller
         ]);
     }
 
-    // Upload gambar promo
+
     private function uploadImage($file)
     {
         $nama_file = $file->getClientOriginalName();

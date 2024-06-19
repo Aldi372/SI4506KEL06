@@ -184,3 +184,4 @@ Route::get('/sales', [OrderController::class, 'sales'])->name('sales');
 Route::get('/artikel', [ArtikelController::class, 'reading_landing'])->name('landing_page.artikel');
 Route::get('/artikel/{id}', [ArtikelController::class, 'show_landing'])->name('landing_page.show_artikel');
 Route::get('/customer/list_mitra', [MitraController::class, 'listMitra'])->name('customer.list_mitra');
+Route::delete('/admin/mitra/{id}', [MitraController::class, 'destroy'])->name('admin.mitra.destroy');
